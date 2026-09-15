@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+runs/*
+!runs/.gitkeep
+*.zip
+.DS_Store

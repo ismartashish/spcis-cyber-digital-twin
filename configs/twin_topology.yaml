@@ -1,0 +1,53 @@
+# Example simulated topology for the toy digital twin.
+# node_id/role/reachable_from/vulnerabilities are ABSTRACT DATA — see
+# digital_twin/env.py docstring. Real deployments generate this from
+# actual IaC (Terraform/K8s manifests) per docs/ARCHITECTURE.md §5,
+# rather than hand-authoring YAML like this.
+
+name: example-3-tier-app
+
+nodes:
+  - node_id: web
+    role: web
+    reachable_from: []           # empty = internet-facing / red starts here
+    detection_sensitivity: 0.25
+    vulnerabilities:
+      - vuln_id: CVE-2023-0001
+        vuln_class: sqli
+        severity: 6.5
+        exploitability: 0.6
+
+  - node_id: api
+    role: api
+    reachable_from: [web]
+    detection_sensitivity: 0.35
+    vulnerabilities:
+      - vuln_id: CVE-2023-0002
+        vuln_class: auth_bypass
+        severity: 7.8
+        exploitability: 0.4
+      - vuln_id: MISCONFIG-IAM-01
+        vuln_class: iam_overpermission
+        severity: 5.0
+        exploitability: 0.8
+
+  - node_id: auth
+    role: auth
+    reachable_from: [api]
+    detection_sensitivity: 0.4
+    vulnerabilities:
+      - vuln_id: CVE-2023-0003
+        vuln_class: deserialization
+        severity: 8.2
+        exploitability: 0.3
+
+  - node_id: db
+    role: db
+    reachable_from: [api, auth]
+    is_crown_jewel: true
+    detection_sensitivity: 0.5
+    vulnerabilities:
+      - vuln_id: CVE-2023-0004
+        vuln_class: privilege_escalation
+        severity: 9.1
+        exploitability: 0.25

@@ -1,0 +1,7 @@
+# Optional: only needed for red_agent/train.py and
+# verification/reachability_check.py
+gymnasium>=0.29
+stable-baselines3>=2.0
+torch>=2.0
+numpy>=1.24
+z3-solver>=4.12

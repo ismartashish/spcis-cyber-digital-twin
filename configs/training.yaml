@@ -1,0 +1,15 @@
+# Example config for red_agent/train.py (Phase 1: single-agent RL vs
+# fixed heuristic blue). League/self-play config (Phase 2) is not
+# implemented yet — see orchestrator/league.py.
+
+topology_config: configs/twin_topology.yaml
+timesteps: 50000
+algorithm: PPO
+seed: 0
+
+reward:
+  crown_jewel_bonus: 10.0
+  detection_penalty: 1.0
+
+blue_opponent: heuristic_blue_v0
+isolate_after_detections: 2
