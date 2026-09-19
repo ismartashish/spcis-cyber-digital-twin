@@ -3,7 +3,7 @@
  */
 
 const BASE_URL = '';
-
+const API_URL = "http://localhost:8000";
 async function fetchJson(url, options = {}) {
   try {
     const res = await fetch(`${BASE_URL}${url}`, {

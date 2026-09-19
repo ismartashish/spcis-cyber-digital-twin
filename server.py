@@ -31,7 +31,9 @@ from red_agent.train import FlatRedGymEnv
 from verification import invariants
 from orchestrator.arena import run_episode, RewardBreakdown
 from explainability.report import render_episode
+from fastapi import FastAPI
 
+app = FastAPI()
 # Optional PPO model loading
 try:
     from sb3_contrib import MaskablePPO
@@ -408,6 +410,17 @@ class BenchmarkRequest(BaseModel):
 # -----------------------------------------------------------------------------
 
 @app.get("/api/status")
+@app.get("/health")
+def health():
+    """
+    Lightweight health-check endpoint for Render/UptimeRobot.
+    Returns quickly without running the simulation.
+    """
+    return {
+        "status": "ok",
+        "service": "SPCIS Cyber Immune System",
+        "model_loaded": session.model_loaded
+    }
 def get_status():
     return {
         "status": "online",
